@@ -1,0 +1,582 @@
+{
+  "jurisdiction": "Maharashtra, India",
+  "note": "Editable reference list. User additions land in the pending queue for admin approval.",
+  "departments": [
+    {
+      "name": "General Administration Department (GAD)",
+      "category": "Secretariat",
+      "aliases": [
+        "GAD",
+        "Samanya Prashasan"
+      ]
+    },
+    {
+      "name": "Revenue and Forest Department",
+      "category": "Secretariat",
+      "aliases": [
+        "Revenue",
+        "Mahsul",
+        "Forest"
+      ]
+    },
+    {
+      "name": "Home Department",
+      "category": "Secretariat",
+      "aliases": [
+        "Home",
+        "Grah Vibhag",
+        "Police"
+      ]
+    },
+    {
+      "name": "Finance Department",
+      "category": "Secretariat",
+      "aliases": [
+        "Finance",
+        "Vitta Vibhag"
+      ]
+    },
+    {
+      "name": "Planning Department",
+      "category": "Secretariat",
+      "aliases": [
+        "Planning",
+        "Niyojan"
+      ]
+    },
+    {
+      "name": "Urban Development Department (UDD)",
+      "category": "Secretariat",
+      "aliases": [
+        "UDD",
+        "Nagar Vikas"
+      ]
+    },
+    {
+      "name": "Rural Development Department (RDD)",
+      "category": "Secretariat",
+      "aliases": [
+        "RDD",
+        "Gramvikas"
+      ]
+    },
+    {
+      "name": "Water Resources Department (WRD)",
+      "category": "Secretariat",
+      "aliases": [
+        "WRD",
+        "Irrigation",
+        "Jalsampada"
+      ]
+    },
+    {
+      "name": "Water Supply and Sanitation Department",
+      "category": "Secretariat",
+      "aliases": [
+        "WSSD",
+        "Paani Puravatha"
+      ]
+    },
+    {
+      "name": "Public Works Department (PWD)",
+      "category": "Secretariat",
+      "aliases": [
+        "PWD",
+        "Sarvajanik Bandhkam"
+      ]
+    },
+    {
+      "name": "Public Health Department",
+      "category": "Secretariat",
+      "aliases": [
+        "Health",
+        "Arogya"
+      ]
+    },
+    {
+      "name": "Medical Education and Drugs Department",
+      "category": "Secretariat",
+      "aliases": [
+        "Medical Education",
+        "FDA"
+      ]
+    },
+    {
+      "name": "School Education and Sports Department",
+      "category": "Secretariat",
+      "aliases": [
+        "School Education",
+        "Shaley Shikshan"
+      ]
+    },
+    {
+      "name": "Higher and Technical Education Department",
+      "category": "Secretariat",
+      "aliases": [
+        "Higher Education",
+        "DTE"
+      ]
+    },
+    {
+      "name": "Agriculture Department",
+      "category": "Secretariat",
+      "aliases": [
+        "Agriculture",
+        "Krushi"
+      ]
+    },
+    {
+      "name": "Animal Husbandry, Dairy Development and Fisheries Department",
+      "category": "Secretariat",
+      "aliases": [
+        "ADF",
+        "Pashusamvardhan"
+      ]
+    },
+    {
+      "name": "Co-operation, Marketing and Textiles Department",
+      "category": "Secretariat",
+      "aliases": [
+        "Co-operation",
+        "Sahakar"
+      ]
+    },
+    {
+      "name": "Industries, Energy, Labour and Mining Department",
+      "category": "Secretariat",
+      "aliases": [
+        "Industries",
+        "Udyog",
+        "Energy",
+        "Labour"
+      ]
+    },
+    {
+      "name": "Environment and Climate Change Department",
+      "category": "Secretariat",
+      "aliases": [
+        "Environment",
+        "Paryavaran"
+      ]
+    },
+    {
+      "name": "Tribal Development Department",
+      "category": "Secretariat",
+      "aliases": [
+        "Tribal",
+        "Adivasi Vikas"
+      ]
+    },
+    {
+      "name": "Social Justice and Special Assistance Department",
+      "category": "Secretariat",
+      "aliases": [
+        "Social Justice",
+        "Samaj Kalyan"
+      ]
+    },
+    {
+      "name": "Other Backward Bahujan Welfare Department",
+      "category": "Secretariat",
+      "aliases": [
+        "OBC Welfare",
+        "Bahujan Kalyan"
+      ]
+    },
+    {
+      "name": "Minority Development Department",
+      "category": "Secretariat",
+      "aliases": [
+        "Minority",
+        "Alpasankhyank"
+      ]
+    },
+    {
+      "name": "Women and Child Development Department (WCD)",
+      "category": "Secretariat",
+      "aliases": [
+        "WCD",
+        "Mahila Bal Vikas"
+      ]
+    },
+    {
+      "name": "Housing Department",
+      "category": "Secretariat",
+      "aliases": [
+        "Housing",
+        "Gruhnirman"
+      ]
+    },
+    {
+      "name": "Transport Department",
+      "category": "Secretariat",
+      "aliases": [
+        "Transport",
+        "Parivahan",
+        "RTO"
+      ]
+    },
+    {
+      "name": "Tourism and Cultural Affairs Department",
+      "category": "Secretariat",
+      "aliases": [
+        "Tourism",
+        "Paryatan",
+        "Culture"
+      ]
+    },
+    {
+      "name": "Law and Judiciary Department",
+      "category": "Secretariat",
+      "aliases": [
+        "Law",
+        "Vidhi va Nyay"
+      ]
+    },
+    {
+      "name": "Marathi Language Department",
+      "category": "Secretariat",
+      "aliases": [
+        "Marathi Bhasha"
+      ]
+    },
+    {
+      "name": "Skill, Employment, Entrepreneurship and Innovation Department",
+      "category": "Secretariat",
+      "aliases": [
+        "Skill Development",
+        "Kaushalya Vikas"
+      ]
+    },
+    {
+      "name": "Information Technology Department (DIT)",
+      "category": "Secretariat",
+      "aliases": [
+        "DIT",
+        "IT Department",
+        "Mahiti Tantrgyan"
+      ]
+    },
+    {
+      "name": "Food, Civil Supplies and Consumer Protection Department",
+      "category": "Secretariat",
+      "aliases": [
+        "FCS",
+        "Ann Nagri Puravatha",
+        "PDS"
+      ]
+    },
+    {
+      "name": "Relief and Rehabilitation Department",
+      "category": "Secretariat",
+      "aliases": [
+        "Relief",
+        "Madat va Punarvasan",
+        "Disaster Management"
+      ]
+    },
+    {
+      "name": "Soil and Water Conservation Department",
+      "category": "Secretariat",
+      "aliases": [
+        "Soil Conservation",
+        "Mrud va Jal Sandharan"
+      ]
+    },
+    {
+      "name": "Employment Guarantee Scheme Department",
+      "category": "Secretariat",
+      "aliases": [
+        "EGS",
+        "MGNREGA"
+      ]
+    },
+    {
+      "name": "Parliamentary Affairs Department",
+      "category": "Secretariat",
+      "aliases": [
+        "Sansadiya Karya"
+      ]
+    },
+    {
+      "name": "Sports and Youth Welfare Department",
+      "category": "Secretariat",
+      "aliases": [
+        "Sports",
+        "Krida"
+      ]
+    },
+    {
+      "name": "Office of the Divisional Commissioner",
+      "category": "Field Administration",
+      "aliases": [
+        "Divisional Commissioner",
+        "Vibhagiya Ayukt"
+      ]
+    },
+    {
+      "name": "District Collectorate",
+      "category": "Field Administration",
+      "aliases": [
+        "Collector Office",
+        "Jilhadhikari Karyalay",
+        "Collectorate"
+      ]
+    },
+    {
+      "name": "Sub-Divisional Office (Prant Office)",
+      "category": "Field Administration",
+      "aliases": [
+        "SDO Office",
+        "Prant Karyalay"
+      ]
+    },
+    {
+      "name": "Tahsil Office (Tahsildar)",
+      "category": "Field Administration",
+      "aliases": [
+        "Tahsil",
+        "Taluka Office",
+        "Tahsildar Karyalay"
+      ]
+    },
+    {
+      "name": "Zilla Parishad",
+      "category": "Local Body",
+      "aliases": [
+        "ZP",
+        "District Council"
+      ]
+    },
+    {
+      "name": "Panchayat Samiti",
+      "category": "Local Body",
+      "aliases": [
+        "Block Panchayat"
+      ]
+    },
+    {
+      "name": "Gram Panchayat",
+      "category": "Local Body",
+      "aliases": [
+        "Village Panchayat",
+        "GP"
+      ]
+    },
+    {
+      "name": "Municipal Corporation",
+      "category": "Local Body",
+      "aliases": [
+        "Mahanagarpalika",
+        "MC"
+      ]
+    },
+    {
+      "name": "Municipal Council / Nagar Panchayat",
+      "category": "Local Body",
+      "aliases": [
+        "Nagarparishad",
+        "Nagar Panchayat"
+      ]
+    },
+    {
+      "name": "Brihanmumbai Municipal Corporation (BMC)",
+      "category": "Local Body",
+      "aliases": [
+        "BMC",
+        "MCGM",
+        "Mumbai Mahanagarpalika"
+      ]
+    },
+    {
+      "name": "Pune Municipal Corporation (PMC)",
+      "category": "Local Body",
+      "aliases": [
+        "PMC",
+        "Pune Corporation"
+      ]
+    },
+    {
+      "name": "Nagpur Municipal Corporation (NMC)",
+      "category": "Local Body",
+      "aliases": [
+        "NMC",
+        "Nagpur Corporation"
+      ]
+    },
+    {
+      "name": "Maharashtra Information Technology Corporation (MahaIT)",
+      "category": "Corporation / Agency",
+      "aliases": [
+        "MahaIT",
+        "MahaITC"
+      ]
+    },
+    {
+      "name": "Maharashtra State Electricity Distribution Co. Ltd. (MSEDCL)",
+      "category": "Corporation / Agency",
+      "aliases": [
+        "MSEDCL",
+        "Mahavitaran"
+      ]
+    },
+    {
+      "name": "Maharashtra State Road Transport Corporation (MSRTC)",
+      "category": "Corporation / Agency",
+      "aliases": [
+        "MSRTC",
+        "ST Mahamandal"
+      ]
+    },
+    {
+      "name": "Maharashtra Industrial Development Corporation (MIDC)",
+      "category": "Corporation / Agency",
+      "aliases": [
+        "MIDC"
+      ]
+    },
+    {
+      "name": "Mumbai Metropolitan Region Development Authority (MMRDA)",
+      "category": "Corporation / Agency",
+      "aliases": [
+        "MMRDA"
+      ]
+    },
+    {
+      "name": "Pune Metropolitan Region Development Authority (PMRDA)",
+      "category": "Corporation / Agency",
+      "aliases": [
+        "PMRDA"
+      ]
+    },
+    {
+      "name": "City and Industrial Development Corporation (CIDCO)",
+      "category": "Corporation / Agency",
+      "aliases": [
+        "CIDCO"
+      ]
+    },
+    {
+      "name": "Maharashtra Jeevan Pradhikaran (MJP)",
+      "category": "Corporation / Agency",
+      "aliases": [
+        "MJP"
+      ]
+    },
+    {
+      "name": "Maharashtra Pollution Control Board (MPCB)",
+      "category": "Corporation / Agency",
+      "aliases": [
+        "MPCB"
+      ]
+    },
+    {
+      "name": "Maharashtra State Road Development Corporation (MSRDC)",
+      "category": "Corporation / Agency",
+      "aliases": [
+        "MSRDC"
+      ]
+    },
+    {
+      "name": "Maharashtra Real Estate Regulatory Authority (MahaRERA)",
+      "category": "Corporation / Agency",
+      "aliases": [
+        "MahaRERA",
+        "RERA"
+      ]
+    },
+    {
+      "name": "Maharashtra Remote Sensing Applications Centre (MRSAC)",
+      "category": "Corporation / Agency",
+      "aliases": [
+        "MRSAC"
+      ]
+    },
+    {
+      "name": "State Disaster Management Authority (SDMA)",
+      "category": "Corporation / Agency",
+      "aliases": [
+        "SDMA"
+      ]
+    },
+    {
+      "name": "Directorate of Information Technology",
+      "category": "Directorate",
+      "aliases": [
+        "DIT Directorate"
+      ]
+    },
+    {
+      "name": "Directorate of Economics and Statistics (DES)",
+      "category": "Directorate",
+      "aliases": [
+        "DES",
+        "Statistics"
+      ]
+    },
+    {
+      "name": "Directorate of Municipal Administration (DMA)",
+      "category": "Directorate",
+      "aliases": [
+        "DMA"
+      ]
+    },
+    {
+      "name": "Directorate of Health Services (DHS)",
+      "category": "Directorate",
+      "aliases": [
+        "DHS"
+      ]
+    },
+    {
+      "name": "Settlement Commissioner and Director of Land Records",
+      "category": "Directorate",
+      "aliases": [
+        "Land Records",
+        "Bhumi Abhilekh",
+        "DLR"
+      ]
+    },
+    {
+      "name": "National Informatics Centre - Maharashtra State Unit",
+      "category": "Central Support",
+      "aliases": [
+        "NIC",
+        "NIC Maharashtra"
+      ]
+    },
+    {
+      "name": "State Data Centre (SDC)",
+      "category": "Central Support",
+      "aliases": [
+        "SDC",
+        "Data Centre"
+      ]
+    },
+    {
+      "name": "Maharashtra State Wide Area Network (MSWAN)",
+      "category": "Central Support",
+      "aliases": [
+        "MSWAN",
+        "SWAN"
+      ]
+    },
+    {
+      "name": "Common Service Centre / Aaple Sarkar Seva Kendra",
+      "category": "Service Delivery",
+      "aliases": [
+        "CSC",
+        "Aaple Sarkar Kendra",
+        "SETU"
+      ]
+    },
+    {
+      "name": "Other / Not listed",
+      "category": "Other",
+      "aliases": [
+        "Other",
+        "Custom"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,295 @@
+{
+  "note": "raci_default is the suggested RACI letter when this role is not the senior-most actor.",
+  "roles": [
+    {
+      "name": "Chief Secretary",
+      "tier": "Apex",
+      "raci_default": "A"
+    },
+    {
+      "name": "Additional Chief Secretary",
+      "tier": "Apex",
+      "raci_default": "A"
+    },
+    {
+      "name": "Principal Secretary",
+      "tier": "Apex",
+      "raci_default": "A"
+    },
+    {
+      "name": "Secretary",
+      "tier": "Apex",
+      "raci_default": "A"
+    },
+    {
+      "name": "Commissioner",
+      "tier": "Apex",
+      "raci_default": "A"
+    },
+    {
+      "name": "Divisional Commissioner",
+      "tier": "Apex",
+      "raci_default": "A"
+    },
+    {
+      "name": "District Collector",
+      "tier": "Senior",
+      "raci_default": "A"
+    },
+    {
+      "name": "Additional Collector",
+      "tier": "Senior",
+      "raci_default": "R"
+    },
+    {
+      "name": "Resident Deputy Collector",
+      "tier": "Senior",
+      "raci_default": "R"
+    },
+    {
+      "name": "Chief Executive Officer (Zilla Parishad)",
+      "tier": "Senior",
+      "raci_default": "A"
+    },
+    {
+      "name": "Municipal Commissioner",
+      "tier": "Senior",
+      "raci_default": "A"
+    },
+    {
+      "name": "Additional Municipal Commissioner",
+      "tier": "Senior",
+      "raci_default": "R"
+    },
+    {
+      "name": "Joint Secretary",
+      "tier": "Senior",
+      "raci_default": "R"
+    },
+    {
+      "name": "Deputy Secretary",
+      "tier": "Senior",
+      "raci_default": "R"
+    },
+    {
+      "name": "Under Secretary",
+      "tier": "Middle",
+      "raci_default": "R"
+    },
+    {
+      "name": "Section Officer",
+      "tier": "Middle",
+      "raci_default": "R"
+    },
+    {
+      "name": "Desk Officer",
+      "tier": "Middle",
+      "raci_default": "R"
+    },
+    {
+      "name": "Sub-Divisional Officer (SDO / Prant Officer)",
+      "tier": "Field",
+      "raci_default": "R"
+    },
+    {
+      "name": "Tahsildar",
+      "tier": "Field",
+      "raci_default": "R"
+    },
+    {
+      "name": "Naib Tahsildar",
+      "tier": "Field",
+      "raci_default": "R"
+    },
+    {
+      "name": "Circle Officer",
+      "tier": "Field",
+      "raci_default": "R"
+    },
+    {
+      "name": "Talathi",
+      "tier": "Field",
+      "raci_default": "R"
+    },
+    {
+      "name": "Block Development Officer (BDO)",
+      "tier": "Field",
+      "raci_default": "R"
+    },
+    {
+      "name": "Gram Sevak",
+      "tier": "Field",
+      "raci_default": "R"
+    },
+    {
+      "name": "District Nodal Officer",
+      "tier": "Field",
+      "raci_default": "R"
+    },
+    {
+      "name": "Field Verification Officer",
+      "tier": "Field",
+      "raci_default": "R"
+    },
+    {
+      "name": "Data Entry Operator",
+      "tier": "Field",
+      "raci_default": "R"
+    },
+    {
+      "name": "Project Director",
+      "tier": "Programme",
+      "raci_default": "A"
+    },
+    {
+      "name": "Deputy Director",
+      "tier": "Programme",
+      "raci_default": "R"
+    },
+    {
+      "name": "Assistant Director",
+      "tier": "Programme",
+      "raci_default": "R"
+    },
+    {
+      "name": "Programme Manager",
+      "tier": "Programme",
+      "raci_default": "R"
+    },
+    {
+      "name": "Nodal Officer",
+      "tier": "Programme",
+      "raci_default": "R"
+    },
+    {
+      "name": "Executive Engineer",
+      "tier": "Technical",
+      "raci_default": "R"
+    },
+    {
+      "name": "Deputy Engineer",
+      "tier": "Technical",
+      "raci_default": "R"
+    },
+    {
+      "name": "Junior Engineer",
+      "tier": "Technical",
+      "raci_default": "R"
+    },
+    {
+      "name": "System Analyst",
+      "tier": "Technical",
+      "raci_default": "R"
+    },
+    {
+      "name": "Senior Programmer",
+      "tier": "Technical",
+      "raci_default": "R"
+    },
+    {
+      "name": "Database Administrator",
+      "tier": "Technical",
+      "raci_default": "R"
+    },
+    {
+      "name": "Network Administrator",
+      "tier": "Technical",
+      "raci_default": "R"
+    },
+    {
+      "name": "District Informatics Officer (NIC)",
+      "tier": "Technical",
+      "raci_default": "R"
+    },
+    {
+      "name": "Technical Lead",
+      "tier": "Technical",
+      "raci_default": "R"
+    },
+    {
+      "name": "Data Operations Lead",
+      "tier": "Technical",
+      "raci_default": "R"
+    },
+    {
+      "name": "GIS Analyst",
+      "tier": "Technical",
+      "raci_default": "R"
+    },
+    {
+      "name": "Statistical Officer",
+      "tier": "Technical",
+      "raci_default": "C"
+    },
+    {
+      "name": "Chief Accounts and Finance Officer",
+      "tier": "Finance",
+      "raci_default": "C"
+    },
+    {
+      "name": "Accounts Officer",
+      "tier": "Finance",
+      "raci_default": "C"
+    },
+    {
+      "name": "Internal Auditor",
+      "tier": "Assurance",
+      "raci_default": "C"
+    },
+    {
+      "name": "Compliance Auditor",
+      "tier": "Assurance",
+      "raci_default": "C"
+    },
+    {
+      "name": "Quality Assurance Officer",
+      "tier": "Assurance",
+      "raci_default": "R"
+    },
+    {
+      "name": "Information Security Officer",
+      "tier": "Assurance",
+      "raci_default": "C"
+    },
+    {
+      "name": "Data Protection Officer",
+      "tier": "Assurance",
+      "raci_default": "C"
+    },
+    {
+      "name": "Chief Vigilance Officer",
+      "tier": "Assurance",
+      "raci_default": "C"
+    },
+    {
+      "name": "Public Information Officer (RTI)",
+      "tier": "Assurance",
+      "raci_default": "I"
+    },
+    {
+      "name": "Records Officer",
+      "tier": "Assurance",
+      "raci_default": "R"
+    },
+    {
+      "name": "Law Officer",
+      "tier": "Assurance",
+      "raci_default": "C"
+    },
+    {
+      "name": "Vendor / Implementation Partner",
+      "tier": "External",
+      "raci_default": "R"
+    },
+    {
+      "name": "Consultant",
+      "tier": "External",
+      "raci_default": "C"
+    },
+    {
+      "name": "Other / Custom",
+      "tier": "Other",
+      "raci_default": "R"
+    }
+  ]
+}

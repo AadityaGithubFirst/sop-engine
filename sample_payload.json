@@ -1,0 +1,12 @@
+{
+  "project_name": "National Land Records Digitisation",
+  "department": "Department of Revenue and Land Reforms",
+  "description": "Digitise legacy paper land records across 42 district offices, validate ownership data against the revenue register, and publish a weekly compliance dashboard for district collectors.",
+  "stakeholders": [
+    { "name": "A. Krishnan", "role": "Principal Secretary", "department": "Revenue" },
+    { "name": "R. Mehta", "role": "Data Operations Lead", "department": "IT Cell" },
+    { "name": "S. Iyer", "role": "Compliance Auditor", "department": "Audit" }
+  ],
+  "tools": ["Python", "PostgreSQL", "PowerBI", "Docker"],
+  "security_classification": "RESTRICTED / INTERNAL"
+}

@@ -1,0 +1,453 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SOP Builder</title>
+<link rel="stylesheet" href="/app.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📋</text></svg>">
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead__emblem" aria-hidden="true">📋</div>
+  <div class="masthead__text">
+    <div class="masthead__title">SOP Builder</div>
+    <div class="masthead__subtitle">Standard Operating Procedures for government projects</div>
+  </div>
+  <div class="masthead__actions">
+    <span id="statusPill" class="pill pill--neutral pill--busy">
+      <span class="pill__dot"></span><span id="statusText">Checking the system…</span>
+    </span>
+    <button class="btn btn--ghost btn--sm" id="settingsBtn" type="button">Settings</button>
+  </div>
+</header>
+
+<main class="shell">
+
+  <!-- System readiness banner ------------------------------------------- -->
+  <div id="setupNotice" class="notice notice--info hidden" role="status">
+    <div class="notice__icon" id="setupIcon">⏳</div>
+    <div class="notice__body">
+      <div class="notice__title" id="setupTitle">Checking the system…</div>
+      <div id="setupBody">One moment please.</div>
+    </div>
+  </div>
+
+  <!-- Stepper ------------------------------------------------------------ -->
+  <nav class="stepper" id="stepper" aria-label="Progress through the form">
+    <button class="step step--active" data-goto="1" type="button">
+      <span class="step__num">1</span><span class="step__label">The project</span>
+    </button>
+    <button class="step" data-goto="2" type="button">
+      <span class="step__num">2</span><span class="step__label">The people</span>
+    </button>
+    <button class="step" data-goto="3" type="button">
+      <span class="step__num">3</span><span class="step__label">The tools</span>
+    </button>
+    <button class="step" data-goto="4" type="button">
+      <span class="step__num">4</span><span class="step__label">Check &amp; create</span>
+    </button>
+  </nav>
+
+  <!-- ===================== STEP 1: PROJECT ============================== -->
+  <section class="card" id="step1" aria-labelledby="step1Title">
+    <h1 class="card__title" id="step1Title">Tell us about the project</h1>
+    <p class="card__lede">
+      Four questions. Everything else in the document is worked out for you.
+    </p>
+
+    <div class="field">
+      <label class="field__label" for="projectName">What is the project called?</label>
+      <p class="field__hint">Use the name your office already uses for it.</p>
+      <input type="text" id="projectName" autocomplete="off"
+             placeholder="For example: District Land Records Digitisation">
+      <div class="field__error" id="projectNameError">Please enter a project name.</div>
+    </div>
+
+    <div class="field">
+      <label class="field__label" for="departmentInput">Which department owns it?</label>
+      <p class="field__hint">
+        Start typing and pick from the list. If yours is not listed, type it in full and
+        choose “Add this department”.
+      </p>
+      <div class="combo" id="departmentCombo">
+        <input type="search" id="departmentInput" autocomplete="off" role="combobox"
+               aria-expanded="false" aria-controls="departmentMenu" aria-autocomplete="list"
+               placeholder="For example: Revenue, Health, Urban Development…">
+        <div class="combo__menu" id="departmentMenu" role="listbox" aria-label="Departments"></div>
+      </div>
+      <div class="field__error" id="departmentError">Please choose or enter a department.</div>
+    </div>
+
+    <div class="field">
+      <label class="field__label" for="description">What does the project do?</label>
+      <p class="field__hint">
+        Two or three sentences in plain language. Say what happens, how often, and who it is for.
+        The more you write here, the more detailed the document will be.
+      </p>
+      <textarea id="description" placeholder="For example: Scan and digitise land records from 42 taluka offices. Check ownership details against the revenue register. Publish a weekly progress dashboard for the District Collector."></textarea>
+      <div class="field__error" id="descriptionError">Please describe the project in a sentence or two.</div>
+    </div>
+
+    <div class="field">
+      <label class="field__label" for="classification">
+        How sensitive is this work? <span class="field__optional">(optional)</span>
+      </label>
+      <p class="field__hint">This is printed on every page of the document.</p>
+      <select id="classification">
+        <option value="RESTRICTED / INTERNAL" selected>Restricted / Internal — the usual choice</option>
+        <option value="PUBLIC">Public — may be shared openly</option>
+        <option value="CONFIDENTIAL">Confidential — named officers only</option>
+        <option value="SECRET">Secret — highest sensitivity</option>
+      </select>
+    </div>
+
+    <div class="actions">
+      <div class="spacer"></div>
+      <div class="actions__right">
+        <button class="btn btn--primary" data-next="2" type="button">Continue to the people →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== STEP 2: PEOPLE =============================== -->
+  <section class="card hidden" id="step2" aria-labelledby="step2Title">
+    <h1 class="card__title" id="step2Title">Who is involved?</h1>
+    <p class="card__lede">
+      Add each person once. The document works out who approves, who does the work, who is
+      consulted, and who is kept informed — and puts it in a table.
+    </p>
+
+    <div id="peopleChips" class="chips" aria-live="polite"></div>
+
+    <div class="builder">
+      <div class="builder__title">Add a person</div>
+      <div class="builder__hint">Fill in the three boxes, then press <strong>Add this person</strong>.</div>
+
+      <div class="row">
+        <div>
+          <label class="field__label small" for="personName">Name</label>
+          <input type="text" id="personName" autocomplete="off" placeholder="e.g. Smt. A. Kulkarni">
+        </div>
+        <div>
+          <label class="field__label small" for="personRole">Designation</label>
+          <div class="combo" id="roleCombo">
+            <input type="search" id="personRole" autocomplete="off" role="combobox"
+                   aria-expanded="false" aria-controls="roleMenu" aria-autocomplete="list"
+                   placeholder="e.g. Tahsildar">
+            <div class="combo__menu" id="roleMenu" role="listbox" aria-label="Designations"></div>
+          </div>
+        </div>
+        <div>
+          <label class="field__label small" for="personDept">Department or team</label>
+          <div class="combo" id="personDeptCombo">
+            <input type="search" id="personDept" autocomplete="off" role="combobox"
+                   aria-expanded="false" aria-controls="personDeptMenu" aria-autocomplete="list"
+                   placeholder="e.g. District Collectorate">
+            <div class="combo__menu" id="personDeptMenu" role="listbox" aria-label="Departments"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field__error" id="personError">Please fill in a name and a designation.</div>
+
+      <div style="margin-top:16px">
+        <button class="btn btn--ghost" id="addPersonBtn" type="button">＋ Add this person</button>
+      </div>
+    </div>
+
+    <div class="notice notice--info" style="margin-top:22px">
+      <div class="notice__icon">💡</div>
+      <div class="notice__body">
+        <div class="notice__title">You can leave this empty</div>
+        If you add nobody, the document uses standard government roles instead
+        (Accountable Officer, Project Lead, Records Officer) and marks them for you to fill in.
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="btn btn--quiet" data-next="1" type="button">← Back</button>
+      <div class="actions__right">
+        <button class="btn btn--primary" data-next="3" type="button">Continue to the tools →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== STEP 3: TOOLS =============================== -->
+  <section class="card hidden" id="step3" aria-labelledby="step3Title">
+    <h1 class="card__title" id="step3Title">What software and systems are used?</h1>
+    <p class="card__lede">
+      Every item you add gets its own section in the document, with setup steps, checks,
+      and what to do when it fails.
+    </p>
+
+    <div id="toolChips" class="chips" aria-live="polite"></div>
+
+    <div class="field" style="margin-top:20px">
+      <label class="field__label" for="toolInput">Search for a tool or system</label>
+      <p class="field__hint">
+        Over a hundred are already known, including Maharashtra government platforms such as
+        MahaBhulekh, Aaple Sarkar and Sevaarth. Not listed? Type the name and we will help
+        you describe it.
+      </p>
+      <div class="combo" id="toolCombo">
+        <input type="search" id="toolInput" autocomplete="off" role="combobox"
+               aria-expanded="false" aria-controls="toolMenu" aria-autocomplete="list"
+               placeholder="For example: Excel, PostgreSQL, Power BI, MahaBhulekh…">
+        <div class="combo__menu" id="toolMenu" role="listbox" aria-label="Tools"></div>
+      </div>
+    </div>
+
+    <div class="notice notice--info">
+      <div class="notice__icon">💡</div>
+      <div class="notice__body">
+        <div class="notice__title">Not sure what to add?</div>
+        Add whatever the team actually opens during the work — a spreadsheet, a portal,
+        a database, a dashboard. Everyday tools count.
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="btn btn--quiet" data-next="2" type="button">← Back</button>
+      <div class="actions__right">
+        <button class="btn btn--primary" data-next="4" type="button">Check everything →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== STEP 4: REVIEW ============================== -->
+  <section class="card hidden" id="step4" aria-labelledby="step4Title">
+    <h1 class="card__title" id="step4Title">Check this over</h1>
+    <p class="card__lede">
+      If anything is wrong, click the step above to go back and change it.
+    </p>
+
+    <div class="review" id="reviewList"></div>
+
+    <div id="readyWarning" class="notice notice--warn hidden" style="margin-top:22px">
+      <div class="notice__icon">⚠️</div>
+      <div class="notice__body">
+        <div class="notice__title">The system is not ready yet</div>
+        <div id="readyWarningBody">Open <strong>Settings</strong> to see what is missing.</div>
+      </div>
+    </div>
+
+    <div class="center" style="margin-top:30px">
+      <button class="btn btn--go" id="generateBtn" type="button">Create the document</button>
+      <p class="muted small" style="margin-top:14px" id="generateHint">
+        This usually takes a few minutes. You can leave this window open and come back.
+      </p>
+    </div>
+
+    <div class="actions">
+      <button class="btn btn--quiet" data-next="3" type="button">← Back</button>
+    </div>
+  </section>
+
+  <!-- ===================== WORKING ===================================== -->
+  <section class="card hidden" id="working" aria-labelledby="workingTitle" aria-live="polite">
+    <div class="progress">
+      <svg class="progress__ring" width="140" height="140" viewBox="0 0 120 120" aria-hidden="true">
+        <circle class="track" cx="60" cy="60" r="52"></circle>
+        <circle class="bar" id="progressBar" cx="60" cy="60" r="52"></circle>
+        <text class="progress__percent" id="progressPercent" x="60" y="60"
+              text-anchor="middle" dominant-baseline="central">0%</text>
+      </svg>
+      <div class="progress__headline" id="workingTitle">Writing your document</div>
+      <div class="progress__detail" id="progressDetail">Starting…</div>
+      <div class="progress__timer" id="progressTimer">0:00 elapsed</div>
+    </div>
+
+    <div class="tasklist" id="taskList"></div>
+
+    <div class="center" style="margin-top:26px">
+      <button class="btn btn--quiet" id="cancelBtn" type="button">Cancel</button>
+    </div>
+  </section>
+
+  <!-- ===================== RESULT ====================================== -->
+  <section class="card hidden" id="result" aria-labelledby="resultTitle">
+    <div class="result__hero">
+      <div class="result__tick" aria-hidden="true">✓</div>
+      <div class="result__title" id="resultTitle">Your document is ready</div>
+      <div class="result__sub">
+        Reference <span class="docid" id="resultDocId"></span>
+      </div>
+      <div class="download-row">
+        <a class="btn btn--go" id="downloadBtn" href="#">⬇ Download the Word document</a>
+        <button class="btn btn--ghost" id="restartBtn" type="button">Create another</button>
+      </div>
+    </div>
+
+    <div class="checks" id="checksBlock">
+      <div class="checks__title">Automatic checks</div>
+      <div id="checksList"></div>
+    </div>
+
+    <div class="preview">
+      <div class="preview__head">
+        <span>Preview of the document</span>
+        <button class="btn btn--quiet btn--sm" id="copyBtn" type="button">Copy the text</button>
+      </div>
+      <pre class="preview__body" id="previewBody"></pre>
+    </div>
+  </section>
+
+  <!-- ===================== ERROR ======================================= -->
+  <section class="card hidden" id="errorCard">
+    <div class="notice notice--danger" style="margin:0">
+      <div class="notice__icon">✕</div>
+      <div class="notice__body">
+        <div class="notice__title" id="errorTitle">Something went wrong</div>
+        <div id="errorBody"></div>
+      </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn--quiet" id="errorBackBtn" type="button">← Back to the form</button>
+      <div class="actions__right">
+        <button class="btn btn--primary" id="retryBtn" type="button">Try again</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ===================== TOOL RESEARCH MODAL =========================== -->
+<div class="modal-backdrop" id="toolModal" role="dialog" aria-modal="true" aria-labelledby="toolModalTitle">
+  <div class="modal">
+    <h2 class="modal__title" id="toolModalTitle">We do not know this one yet</h2>
+    <p class="modal__lede" id="toolModalLede"></p>
+
+    <div id="toolModalBusy" class="center hidden" style="padding:26px 0">
+      <div class="progress__detail">Asking the offline model…</div>
+      <p class="small muted" style="margin-top:10px">
+        This can take up to a minute on this computer. You can cancel and type your own instead.
+      </p>
+      <button class="btn btn--quiet btn--sm" id="toolBusyCancelBtn" type="button"
+              style="margin-top:12px">Cancel and type it myself</button>
+    </div>
+
+    <div id="toolRejected"></div>
+
+    <div id="toolDraftBlock" class="hidden">
+      <div class="draft">
+        <div id="toolDraftText"></div>
+        <div class="draft__source" id="toolDraftSource"></div>
+      </div>
+      <p class="small muted" style="margin-top:14px">
+        Does this describe the tool correctly? It will be printed in the document.
+      </p>
+      <div class="modal__actions">
+        <button class="btn btn--quiet" id="toolWriteOwnBtn" type="button">Write my own</button>
+        <button class="btn btn--ghost" id="toolRejectBtn" type="button">Not quite — try again</button>
+        <button class="btn btn--primary" id="toolAcceptBtn" type="button">Yes, use this</button>
+      </div>
+    </div>
+
+    <div id="toolHintBlock" class="hidden">
+      <div class="field">
+        <label class="field__label" for="toolHint">What is wrong with it?</label>
+        <p class="field__hint">A short note is enough — it will try again with your guidance.</p>
+        <input type="text" id="toolHint" placeholder="e.g. It is a Maharashtra land records portal, not a database">
+      </div>
+      <div class="modal__actions">
+        <button class="btn btn--quiet" id="toolHintCancelBtn" type="button">Back</button>
+        <button class="btn btn--primary" id="toolHintGoBtn" type="button">Try again</button>
+      </div>
+    </div>
+
+    <div id="toolOwnBlock" class="hidden">
+      <div class="field">
+        <label class="field__label" for="toolOwnText">Describe this tool yourself</label>
+        <p class="field__hint">
+          One or two sentences: what it is and what it is used for. This goes into the document
+          exactly as you write it.
+        </p>
+        <textarea id="toolOwnText" style="min-height:110px"
+                  placeholder="e.g. A departmental portal used to record and approve field inspection reports."></textarea>
+      </div>
+      <div class="modal__actions">
+        <button class="btn btn--quiet" id="toolOwnCancelBtn" type="button">Cancel</button>
+        <button class="btn btn--ghost" id="toolSuggestBtn" type="button">
+          ✨ Suggest one for me
+        </button>
+        <button class="btn btn--primary" id="toolOwnSaveBtn" type="button">Use my description</button>
+      </div>
+    </div>
+
+    <div class="modal__actions" id="toolModalClose">
+      <button class="btn btn--quiet" id="toolCancelBtn" type="button">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== SETTINGS MODAL ================================ -->
+<div class="modal-backdrop" id="settingsModal" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+  <div class="modal modal--wide">
+    <h2 class="modal__title" id="settingsTitle">Settings</h2>
+    <p class="modal__lede">Your computer, the writing model, and entries waiting for approval.</p>
+
+    <h3 style="font-size:18px;margin:0 0 8px">This computer</h3>
+    <div class="specs" id="specsGrid"></div>
+
+    <h3 style="font-size:18px;margin:26px 0 4px">Choose the writing model</h3>
+    <p class="field__hint" id="modelReason"></p>
+    <div class="models" id="modelList"></div>
+    <p class="small muted" style="margin-top:14px" id="modelInstallHint"></p>
+
+    <h3 style="font-size:18px;margin:30px 0 4px">Internet lookup for unknown tools</h3>
+    <p class="field__hint">
+      When you add a tool that is not in our list, the engine can check public reference
+      sites for a description.
+    </p>
+
+    <label class="model" id="webLookupRow" for="webLookupToggle">
+      <input type="checkbox" id="webLookupToggle">
+      <span class="model__body">
+        <span class="model__name">
+          Allow this computer to look tools up online
+          <span class="tag" id="webLookupState"></span>
+        </span>
+        <span class="model__desc" id="webLookupDesc"></span>
+      </span>
+    </label>
+
+    <div class="notice notice--warn" style="margin-top:14px">
+      <div class="notice__icon">🔒</div>
+      <div class="notice__body">
+        <div class="notice__title">What leaves this computer when this is on</div>
+        Only the <strong>name of the tool</strong> you typed — for example “MahaBhulekh”.
+        The project name, the description, the people you listed, and the finished document
+        <strong>never</strong> leave this computer, whether this is on or off.
+        Every lookup is written to the log.
+        <div class="small" style="margin-top:9px">
+          Leave this <strong>off</strong> if this machine is on a secure or air-gapped network.
+        </div>
+      </div>
+    </div>
+
+    <details style="margin-top:26px">
+      <summary style="cursor:pointer;font-weight:640;font-size:17px">
+        Entries waiting for approval (administrator)
+      </summary>
+      <p class="field__hint" style="margin-top:12px">
+        Tools, departments, and designations that officers typed in. Approving one makes it
+        available to everyone on this installation.
+      </p>
+      <div class="field">
+        <label class="field__label small" for="adminToken">Administrator password</label>
+        <input type="text" id="adminToken" placeholder="Set in the .env file" autocomplete="off">
+      </div>
+      <button class="btn btn--ghost btn--sm" id="loadQueueBtn" type="button">Show the queue</button>
+      <div id="queueList" style="margin-top:18px"></div>
+    </details>
+
+    <div class="modal__actions">
+      <button class="btn btn--primary" id="settingsCloseBtn" type="button">Done</button>
+    </div>
+  </div>
+</div>
+
+<script src="/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,904 @@
+{
+  "note": "Curated catalog. Unlisted tools are described by the user and queued for admin approval.",
+  "categories": [
+    "Analytics",
+    "Business Intelligence",
+    "Collaboration",
+    "Data Pipeline",
+    "Database",
+    "Engineering",
+    "GIS",
+    "Government Platform (India)",
+    "Government Platform (Maharashtra)",
+    "Infrastructure",
+    "Language",
+    "Language / Runtime",
+    "Monitoring",
+    "Security / Identity"
+  ],
+  "tools": [
+    {
+      "name": "Aaple Sarkar (RTS Portal)",
+      "category": "Government Platform (Maharashtra)",
+      "aliases": [
+        "Aaple Sarkar",
+        "RTS",
+        "Right to Service"
+      ],
+      "description": "Maharashtra citizen service delivery portal for notified services under the Right to Public Services Act."
+    },
+    {
+      "name": "MahaOnline",
+      "category": "Government Platform (Maharashtra)",
+      "aliases": [
+        "Maha Online"
+      ],
+      "description": "Maharashtra e-governance service delivery and application hosting platform."
+    },
+    {
+      "name": "MahaBhulekh (Land Records)",
+      "category": "Government Platform (Maharashtra)",
+      "aliases": [
+        "MahaBhulekh",
+        "Bhulekh",
+        "7/12",
+        "Satbara"
+      ],
+      "description": "Maharashtra online land record system serving 7/12 and 8A extracts."
+    },
+    {
+      "name": "MahaDBT",
+      "category": "Government Platform (Maharashtra)",
+      "aliases": [
+        "Maha DBT",
+        "Direct Benefit Transfer"
+      ],
+      "description": "Maharashtra Direct Benefit Transfer portal for scholarship and scheme disbursement."
+    },
+    {
+      "name": "Sevaarth (Payroll)",
+      "category": "Government Platform (Maharashtra)",
+      "aliases": [
+        "Sevaarth",
+        "Sevarth"
+      ],
+      "description": "Maharashtra government employee payroll and service record system."
+    },
+    {
+      "name": "BEAMS (Budget Monitoring)",
+      "category": "Government Platform (Maharashtra)",
+      "aliases": [
+        "BEAMS"
+      ],
+      "description": "Budget Estimation, Allocation and Monitoring System used for Maharashtra budget distribution."
+    },
+    {
+      "name": "MahaKosh / IFMS",
+      "category": "Government Platform (Maharashtra)",
+      "aliases": [
+        "MahaKosh",
+        "IFMS",
+        "Koshvahini"
+      ],
+      "description": "Integrated Financial Management System for Maharashtra treasury and expenditure."
+    },
+    {
+      "name": "Mahatenders (GePNIC)",
+      "category": "Government Platform (Maharashtra)",
+      "aliases": [
+        "Mahatenders",
+        "GePNIC",
+        "e-Tendering"
+      ],
+      "description": "Maharashtra e-tendering portal built on the NIC GePNIC platform."
+    },
+    {
+      "name": "MahaGIS",
+      "category": "Government Platform (Maharashtra)",
+      "aliases": [
+        "Maha GIS"
+      ],
+      "description": "Maharashtra state geospatial data infrastructure and map services."
+    },
+    {
+      "name": "Bhu-Naksha",
+      "category": "Government Platform (India)",
+      "aliases": [
+        "Bhunaksha",
+        "Cadastral Map"
+      ],
+      "description": "Cadastral mapping system linking survey numbers to digitised village maps."
+    },
+    {
+      "name": "e-Office (NIC)",
+      "category": "Government Platform (India)",
+      "aliases": [
+        "eOffice",
+        "e Office",
+        "File Management System"
+      ],
+      "description": "NIC digital file and note-sheet management system replacing physical files."
+    },
+    {
+      "name": "DigiLocker",
+      "category": "Government Platform (India)",
+      "aliases": [
+        "Digi Locker"
+      ],
+      "description": "National document wallet for issuing and verifying government documents."
+    },
+    {
+      "name": "Aadhaar e-KYC (UIDAI)",
+      "category": "Government Platform (India)",
+      "aliases": [
+        "Aadhaar",
+        "UIDAI",
+        "eKYC"
+      ],
+      "description": "Identity verification service; use is governed by the Aadhaar Act and UIDAI circulars."
+    },
+    {
+      "name": "eSign / Digital Signature Certificate (DSC)",
+      "category": "Government Platform (India)",
+      "aliases": [
+        "eSign",
+        "DSC",
+        "Digital Signature"
+      ],
+      "description": "Legally valid electronic signing under the IT Act, using a Class 2/3 DSC or eSign service."
+    },
+    {
+      "name": "API Setu",
+      "category": "Government Platform (India)",
+      "aliases": [
+        "APISetu",
+        "API Setu"
+      ],
+      "description": "Government API exchange for verified document and data pulls between departments."
+    },
+    {
+      "name": "PFMS",
+      "category": "Government Platform (India)",
+      "aliases": [
+        "Public Financial Management System"
+      ],
+      "description": "Central fund flow, payment and reconciliation system for scheme expenditure."
+    },
+    {
+      "name": "Government e-Marketplace (GeM)",
+      "category": "Government Platform (India)",
+      "aliases": [
+        "GeM"
+      ],
+      "description": "Central procurement marketplace for government goods and services."
+    },
+    {
+      "name": "NIC MeghRaj Cloud",
+      "category": "Government Platform (India)",
+      "aliases": [
+        "MeghRaj",
+        "NIC Cloud"
+      ],
+      "description": "Government of India cloud offering hosted by NIC for departmental workloads."
+    },
+    {
+      "name": "VAHAN",
+      "category": "Government Platform (India)",
+      "aliases": [
+        "Vahan"
+      ],
+      "description": "National vehicle registration database operated by MoRTH."
+    },
+    {
+      "name": "SARATHI",
+      "category": "Government Platform (India)",
+      "aliases": [
+        "Sarathi"
+      ],
+      "description": "National driving licence issuance and management system."
+    },
+    {
+      "name": "CCTNS",
+      "category": "Government Platform (India)",
+      "aliases": [
+        "Crime and Criminal Tracking Network"
+      ],
+      "description": "Crime and Criminal Tracking Network and Systems used by state police."
+    },
+    {
+      "name": "NREGASoft",
+      "category": "Government Platform (India)",
+      "aliases": [
+        "NREGA",
+        "MGNREGA Software"
+      ],
+      "description": "MGNREGA works, muster roll and wage payment management system."
+    },
+    {
+      "name": "ePDS",
+      "category": "Government Platform (India)",
+      "aliases": [
+        "PDS",
+        "Public Distribution System"
+      ],
+      "description": "Public distribution system for ration card and foodgrain allocation management."
+    },
+    {
+      "name": "SVAMITVA",
+      "category": "Government Platform (India)",
+      "aliases": [
+        "Swamitva"
+      ],
+      "description": "Drone-based rural property survey and record-of-rights programme."
+    },
+    {
+      "name": "Bhuvan (ISRO)",
+      "category": "Government Platform (India)",
+      "aliases": [
+        "Bhuvan",
+        "ISRO Geoportal"
+      ],
+      "description": "ISRO geoportal providing satellite imagery and thematic map services."
+    },
+    {
+      "name": "e-Courts",
+      "category": "Government Platform (India)",
+      "aliases": [
+        "eCourts"
+      ],
+      "description": "National judicial case information and cause list system."
+    },
+    {
+      "name": "Sandes",
+      "category": "Government Platform (India)",
+      "aliases": [
+        "Sandes",
+        "GIMS"
+      ],
+      "description": "Government instant messaging system for official communication."
+    },
+    {
+      "name": "NIC eMail",
+      "category": "Government Platform (India)",
+      "aliases": [
+        "NIC Mail",
+        "gov.in email"
+      ],
+      "description": "Official government email service operated by NIC."
+    },
+    {
+      "name": "PostgreSQL",
+      "category": "Database",
+      "aliases": [
+        "Postgres",
+        "PSQL"
+      ],
+      "description": "Open-source relational database used as the system of record."
+    },
+    {
+      "name": "MySQL",
+      "category": "Database",
+      "aliases": [
+        "My SQL"
+      ],
+      "description": "Open-source relational database widely used in departmental web applications."
+    },
+    {
+      "name": "MariaDB",
+      "category": "Database",
+      "aliases": [
+        "Maria"
+      ],
+      "description": "Community fork of MySQL used as a drop-in replacement."
+    },
+    {
+      "name": "Microsoft SQL Server",
+      "category": "Database",
+      "aliases": [
+        "MSSQL",
+        "SQL Server"
+      ],
+      "description": "Commercial relational database common in Windows estates."
+    },
+    {
+      "name": "Oracle Database",
+      "category": "Database",
+      "aliases": [
+        "Oracle",
+        "Oracle DB"
+      ],
+      "description": "Enterprise relational database used in large legacy systems."
+    },
+    {
+      "name": "MongoDB",
+      "category": "Database",
+      "aliases": [
+        "Mongo"
+      ],
+      "description": "Document database for semi-structured records."
+    },
+    {
+      "name": "SQLite",
+      "category": "Database",
+      "aliases": [
+        "SQLite3"
+      ],
+      "description": "Embedded file-based database for small or offline datasets."
+    },
+    {
+      "name": "Redis",
+      "category": "Database",
+      "aliases": [
+        "Redis Cache"
+      ],
+      "description": "In-memory key-value store used for caching and queues."
+    },
+    {
+      "name": "SQL",
+      "category": "Language",
+      "aliases": [
+        "Structured Query Language"
+      ],
+      "description": "Query language for relational staging, reconciliation and extracts."
+    },
+    {
+      "name": "Python",
+      "category": "Language / Runtime",
+      "aliases": [
+        "Python3",
+        "py"
+      ],
+      "description": "Scripting language for extraction, validation and transformation."
+    },
+    {
+      "name": "R",
+      "category": "Language / Runtime",
+      "aliases": [
+        "R Language",
+        "RStudio"
+      ],
+      "description": "Statistical computing environment for analysis and reporting."
+    },
+    {
+      "name": "Java",
+      "category": "Language / Runtime",
+      "aliases": [
+        "JDK",
+        "OpenJDK"
+      ],
+      "description": "Enterprise application runtime common in NIC-built systems."
+    },
+    {
+      "name": ".NET",
+      "category": "Language / Runtime",
+      "aliases": [
+        "dotnet",
+        "ASP.NET",
+        "C#"
+      ],
+      "description": "Microsoft application framework used in Windows-hosted portals."
+    },
+    {
+      "name": "Node.js",
+      "category": "Language / Runtime",
+      "aliases": [
+        "Node",
+        "NodeJS"
+      ],
+      "description": "JavaScript runtime for APIs and web services."
+    },
+    {
+      "name": "PHP",
+      "category": "Language / Runtime",
+      "aliases": [
+        "PHP8"
+      ],
+      "description": "Server-side language used in many legacy departmental portals."
+    },
+    {
+      "name": "Shell / Bash",
+      "category": "Language / Runtime",
+      "aliases": [
+        "Bash",
+        "Shell Script"
+      ],
+      "description": "Shell scripting for scheduling and system automation."
+    },
+    {
+      "name": "PowerShell",
+      "category": "Language / Runtime",
+      "aliases": [
+        "PS",
+        "Windows PowerShell"
+      ],
+      "description": "Windows automation and administration shell."
+    },
+    {
+      "name": "Power BI",
+      "category": "Business Intelligence",
+      "aliases": [
+        "PowerBI",
+        "Power-BI",
+        "MS Power BI"
+      ],
+      "description": "Microsoft dashboard and reporting platform, usually with an on-premises data gateway."
+    },
+    {
+      "name": "Tableau",
+      "category": "Business Intelligence",
+      "aliases": [
+        "Tableau Desktop"
+      ],
+      "description": "Commercial visual analytics and dashboard platform."
+    },
+    {
+      "name": "Apache Superset",
+      "category": "Business Intelligence",
+      "aliases": [
+        "Superset"
+      ],
+      "description": "Open-source BI and dashboard platform."
+    },
+    {
+      "name": "Metabase",
+      "category": "Business Intelligence",
+      "aliases": [
+        "Meta base"
+      ],
+      "description": "Open-source self-service analytics tool."
+    },
+    {
+      "name": "QlikView / Qlik Sense",
+      "category": "Business Intelligence",
+      "aliases": [
+        "Qlik",
+        "QlikView"
+      ],
+      "description": "Commercial associative analytics platform."
+    },
+    {
+      "name": "Microsoft Excel",
+      "category": "Business Intelligence",
+      "aliases": [
+        "Excel",
+        "MS Excel",
+        "XLSX"
+      ],
+      "description": "Spreadsheet tool for tabulation, reconciliation and reporting."
+    },
+    {
+      "name": "LibreOffice Calc",
+      "category": "Business Intelligence",
+      "aliases": [
+        "LibreOffice",
+        "Calc"
+      ],
+      "description": "Open-source spreadsheet suite used where licensing is constrained."
+    },
+    {
+      "name": "Docker",
+      "category": "Infrastructure",
+      "aliases": [
+        "Docker Engine",
+        "Containers"
+      ],
+      "description": "Container runtime giving reproducible, isolated execution."
+    },
+    {
+      "name": "Kubernetes",
+      "category": "Infrastructure",
+      "aliases": [
+        "K8s",
+        "K8"
+      ],
+      "description": "Container orchestration for scaled service deployment."
+    },
+    {
+      "name": "Ubuntu Server",
+      "category": "Infrastructure",
+      "aliases": [
+        "Ubuntu",
+        "Linux"
+      ],
+      "description": "Linux server baseline for application and database hosts."
+    },
+    {
+      "name": "Red Hat Enterprise Linux",
+      "category": "Infrastructure",
+      "aliases": [
+        "RHEL",
+        "Red Hat"
+      ],
+      "description": "Commercially supported Linux baseline used in state data centres."
+    },
+    {
+      "name": "Windows Server",
+      "category": "Infrastructure",
+      "aliases": [
+        "Windows",
+        "WinServer"
+      ],
+      "description": "Microsoft server operating system for Windows-based estates."
+    },
+    {
+      "name": "Nginx",
+      "category": "Infrastructure",
+      "aliases": [
+        "nginx"
+      ],
+      "description": "Reverse proxy and web server fronting application services."
+    },
+    {
+      "name": "Apache HTTP Server",
+      "category": "Infrastructure",
+      "aliases": [
+        "Apache",
+        "httpd"
+      ],
+      "description": "Web server used for portal hosting."
+    },
+    {
+      "name": "IIS",
+      "category": "Infrastructure",
+      "aliases": [
+        "Internet Information Services"
+      ],
+      "description": "Microsoft web server for .NET applications."
+    },
+    {
+      "name": "VMware vSphere",
+      "category": "Infrastructure",
+      "aliases": [
+        "VMware",
+        "ESXi",
+        "vSphere"
+      ],
+      "description": "Virtualisation platform used in state data centres."
+    },
+    {
+      "name": "Proxmox VE",
+      "category": "Infrastructure",
+      "aliases": [
+        "Proxmox"
+      ],
+      "description": "Open-source virtualisation and container host platform."
+    },
+    {
+      "name": "Apache Airflow",
+      "category": "Data Pipeline",
+      "aliases": [
+        "Airflow"
+      ],
+      "description": "Workflow scheduler for orchestrating data pipelines."
+    },
+    {
+      "name": "Apache NiFi",
+      "category": "Data Pipeline",
+      "aliases": [
+        "NiFi"
+      ],
+      "description": "Dataflow automation tool for routing and transforming records."
+    },
+    {
+      "name": "Apache Kafka",
+      "category": "Data Pipeline",
+      "aliases": [
+        "Kafka"
+      ],
+      "description": "Distributed event streaming platform for high-volume ingestion."
+    },
+    {
+      "name": "Talend",
+      "category": "Data Pipeline",
+      "aliases": [
+        "Talend Open Studio"
+      ],
+      "description": "ETL platform for data integration jobs."
+    },
+    {
+      "name": "Pentaho Data Integration",
+      "category": "Data Pipeline",
+      "aliases": [
+        "Pentaho",
+        "Kettle"
+      ],
+      "description": "Open-source ETL tool for batch data movement."
+    },
+    {
+      "name": "SSIS",
+      "category": "Data Pipeline",
+      "aliases": [
+        "SQL Server Integration Services"
+      ],
+      "description": "Microsoft ETL service bundled with SQL Server."
+    },
+    {
+      "name": "Cron / Task Scheduler",
+      "category": "Data Pipeline",
+      "aliases": [
+        "Cron",
+        "crontab",
+        "Task Scheduler"
+      ],
+      "description": "Operating system job scheduler for recurring routines."
+    },
+    {
+      "name": "QGIS",
+      "category": "GIS",
+      "aliases": [
+        "Q GIS"
+      ],
+      "description": "Open-source desktop GIS for spatial analysis and map production."
+    },
+    {
+      "name": "ArcGIS",
+      "category": "GIS",
+      "aliases": [
+        "ESRI",
+        "ArcGIS Pro"
+      ],
+      "description": "Commercial GIS platform for enterprise spatial workflows."
+    },
+    {
+      "name": "PostGIS",
+      "category": "GIS",
+      "aliases": [
+        "Post GIS"
+      ],
+      "description": "Spatial extension for PostgreSQL enabling geographic queries."
+    },
+    {
+      "name": "GeoServer",
+      "category": "GIS",
+      "aliases": [
+        "Geo Server"
+      ],
+      "description": "Open-source server for publishing spatial data as OGC services."
+    },
+    {
+      "name": "Keycloak",
+      "category": "Security / Identity",
+      "aliases": [
+        "Key Cloak",
+        "SSO"
+      ],
+      "description": "Open-source identity and single sign-on server."
+    },
+    {
+      "name": "Active Directory / LDAP",
+      "category": "Security / Identity",
+      "aliases": [
+        "AD",
+        "LDAP",
+        "Directory Services"
+      ],
+      "description": "Directory service for authentication and group-based access."
+    },
+    {
+      "name": "Hardware Security Module (HSM)",
+      "category": "Security / Identity",
+      "aliases": [
+        "HSM"
+      ],
+      "description": "Tamper-resistant device for key storage and signing operations."
+    },
+    {
+      "name": "SIEM (Wazuh / Splunk)",
+      "category": "Security / Identity",
+      "aliases": [
+        "SIEM",
+        "Wazuh",
+        "Splunk"
+      ],
+      "description": "Security information and event management for log correlation and alerting."
+    },
+    {
+      "name": "Antivirus / EDR",
+      "category": "Security / Identity",
+      "aliases": [
+        "Antivirus",
+        "EDR",
+        "Endpoint Protection"
+      ],
+      "description": "Endpoint malware protection mandated on government hosts."
+    },
+    {
+      "name": "VAPT Toolkit",
+      "category": "Security / Identity",
+      "aliases": [
+        "VAPT",
+        "Nessus",
+        "Penetration Testing"
+      ],
+      "description": "Vulnerability assessment and penetration testing performed before go-live."
+    },
+    {
+      "name": "Prometheus",
+      "category": "Monitoring",
+      "aliases": [
+        "Prom"
+      ],
+      "description": "Metrics collection and alerting system."
+    },
+    {
+      "name": "Grafana",
+      "category": "Monitoring",
+      "aliases": [
+        "Graphana"
+      ],
+      "description": "Metrics dashboard and alert visualisation."
+    },
+    {
+      "name": "Zabbix",
+      "category": "Monitoring",
+      "aliases": [
+        "Zab bix"
+      ],
+      "description": "Infrastructure monitoring platform."
+    },
+    {
+      "name": "Nagios",
+      "category": "Monitoring",
+      "aliases": [
+        "Nagios Core"
+      ],
+      "description": "Host and service availability monitoring."
+    },
+    {
+      "name": "ELK Stack",
+      "category": "Monitoring",
+      "aliases": [
+        "Elasticsearch",
+        "Logstash",
+        "Kibana",
+        "ELK"
+      ],
+      "description": "Log aggregation, search and visualisation stack."
+    },
+    {
+      "name": "Microsoft 365",
+      "category": "Collaboration",
+      "aliases": [
+        "Office 365",
+        "M365",
+        "MS Office"
+      ],
+      "description": "Productivity and collaboration suite."
+    },
+    {
+      "name": "Google Workspace",
+      "category": "Collaboration",
+      "aliases": [
+        "G Suite",
+        "Google Docs"
+      ],
+      "description": "Cloud productivity suite; requires data-residency review before use."
+    },
+    {
+      "name": "Nextcloud",
+      "category": "Collaboration",
+      "aliases": [
+        "Next Cloud"
+      ],
+      "description": "Self-hosted file sync and share platform suitable for on-premises use."
+    },
+    {
+      "name": "LibreOffice",
+      "category": "Collaboration",
+      "aliases": [
+        "Libre Office",
+        "Open Office"
+      ],
+      "description": "Open-source office suite producing ODF and PDF/A documents."
+    },
+    {
+      "name": "Zoom / Webex / Teams",
+      "category": "Collaboration",
+      "aliases": [
+        "Zoom",
+        "Webex",
+        "Microsoft Teams"
+      ],
+      "description": "Video conferencing used for review meetings and sign-off calls."
+    },
+    {
+      "name": "Git",
+      "category": "Engineering",
+      "aliases": [
+        "Git SCM"
+      ],
+      "description": "Distributed version control for scripts and configuration."
+    },
+    {
+      "name": "GitLab",
+      "category": "Engineering",
+      "aliases": [
+        "Git Lab"
+      ],
+      "description": "Self-hostable source control, CI and issue tracking platform."
+    },
+    {
+      "name": "GitHub",
+      "category": "Engineering",
+      "aliases": [
+        "Git Hub"
+      ],
+      "description": "Cloud source control and CI platform; requires data classification review."
+    },
+    {
+      "name": "Jira",
+      "category": "Engineering",
+      "aliases": [
+        "Atlassian Jira"
+      ],
+      "description": "Issue and project tracking tool."
+    },
+    {
+      "name": "Redmine",
+      "category": "Engineering",
+      "aliases": [
+        "Red mine"
+      ],
+      "description": "Open-source project and issue tracking tool."
+    },
+    {
+      "name": "GLPI",
+      "category": "Engineering",
+      "aliases": [
+        "GLPI Helpdesk"
+      ],
+      "description": "Open-source IT asset and service desk management."
+    },
+    {
+      "name": "ServiceNow",
+      "category": "Engineering",
+      "aliases": [
+        "Service Now",
+        "SNOW"
+      ],
+      "description": "Enterprise IT service management platform."
+    },
+    {
+      "name": "Pandas",
+      "category": "Analytics",
+      "aliases": [
+        "pandas"
+      ],
+      "description": "Python data analysis library for tabular processing."
+    },
+    {
+      "name": "Jupyter Notebook",
+      "category": "Analytics",
+      "aliases": [
+        "Jupyter",
+        "JupyterLab"
+      ],
+      "description": "Interactive notebook environment for analysis and documentation."
+    },
+    {
+      "name": "scikit-learn",
+      "category": "Analytics",
+      "aliases": [
+        "sklearn"
+      ],
+      "description": "Python machine learning library for classification and regression."
+    },
+    {
+      "name": "Apache Spark",
+      "category": "Analytics",
+      "aliases": [
+        "Spark",
+        "PySpark"
+      ],
+      "description": "Distributed processing engine for large datasets."
+    },
+    {
+      "name": "Ollama",
+      "category": "Analytics",
+      "aliases": [
+        "Ollama LLM"
+      ],
+      "description": "Local large language model runtime for on-premises AI inference."
+    }
+  ]
+}
