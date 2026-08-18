@@ -235,7 +235,19 @@ def strip_reasoning(text: str) -> str:
             break
         cleaned.append(text[cursor:start])
         end = text.find("</think>", start)
-        if end == -1:  # unterminated block: drop the remainder
+        if end == -1:
+            # Unterminated block: the reply ran out of budget mid-thought, so
+            # no closing tag (and usually no answer) was ever emitted. We keep
+            # the text before `<think>` and drop the truncated remainder, but we
+            # warn loudly — a silent empty return here is what makes the caller
+            # fall back to boilerplate with no visible cause. Disabling thinking
+            # (`think=False`) or raising NUM_CTX is the real fix.
+            logger.warning(
+                "Reasoning block was never closed (%d chars of unterminated "
+                "<think> dropped); the model likely exhausted its context "
+                "before answering. Consider think=False or a larger NUM_CTX.",
+                len(text) - start,
+            )
             break
         cursor = end + len("</think>")
     return "".join(cleaned).strip()

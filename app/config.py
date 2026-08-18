@@ -46,6 +46,21 @@ class Settings(BaseSettings):
     NUM_CTX: int = 8192
     REQUEST_TIMEOUT: int = 600
 
+    # Reasoning ("thinking") models spend their whole context budget on an
+    # internal monologue before writing the answer, which on a fixed NUM_CTX
+    # truncates — or never closes — the actual document section. Off by default:
+    # every generation pass asks the model to answer directly. Turn it on only
+    # if you have also raised NUM_CTX enough to hold the reasoning AND the answer.
+    ENABLE_THINKING: bool = False
+
+    # Larger models reason and write more, and need a wider context window to
+    # fit a full section. When on, each generation pass gets a context window
+    # scaled to the model's parameter count (see `auto_num_ctx`), never smaller
+    # than NUM_CTX and never larger than NUM_CTX_CAP. Turn off to pin every model
+    # to NUM_CTX (useful on a RAM-constrained machine).
+    AUTO_NUM_CTX: bool = True
+    NUM_CTX_CAP: int = 32768
+
     # --- Interactive lookups ------------------------------------------------
     # Tool research runs while the user waits, so it gets its own short budget
     # rather than inheriting REQUEST_TIMEOUT (which sizes whole documents).
