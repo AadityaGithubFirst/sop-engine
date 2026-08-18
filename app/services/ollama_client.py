@@ -47,6 +47,34 @@ class OllamaTimeoutError(OllamaUnavailableError):
     """
 
 
+def auto_num_ctx(model: str, configured: int) -> int:
+    """Pick a context window sized to the model's parameter count.
+
+    Bigger models both reason and write more, so a window tuned for an 8B model
+    truncates a 32B model's section mid-table. The returned value is never below
+    the operator's configured `NUM_CTX` and never above `NUM_CTX_CAP`, so RAM use
+    stays bounded and an explicit `NUM_CTX` is always respected as a floor.
+    A model whose size cannot be read from its tag keeps the configured value.
+    """
+    import re
+
+    match = re.search(r"(\d+(?:\.\d+)?)\s*b\b", model.lower())
+    if not match:
+        return configured
+
+    billions = float(match.group(1))
+    if billions <= 8:
+        target = 8192
+    elif billions <= 15:
+        target = 16384
+    elif billions <= 34:
+        target = 24576
+    else:
+        target = 32768
+
+    return max(configured, min(target, settings.NUM_CTX_CAP))
+
+
 def _looks_like_timeout(exc: Exception) -> bool:
     """True when an SDK exception represents a deadline overrun."""
     if isinstance(exc, TimeoutError):
@@ -148,11 +176,27 @@ class OllamaClient:
         budget that whole-document generation needs. `think=False` asks a
         reasoning model to skip its chain of thought, which is the single
         biggest saving on a CPU-only machine.
+
+        When `think` is not given, it defaults to `settings.ENABLE_THINKING`
+        (off), so document passes ask the model to answer directly. When
+        `num_ctx` is not given and `settings.AUTO_NUM_CTX` is on, the window is
+        scaled to the model's size via `auto_num_ctx`. An explicit argument
+        always wins over both defaults.
         """
         target_model = model or self.model
+
+        effective_think = settings.ENABLE_THINKING if think is None else think
+
+        if num_ctx is not None:
+            effective_num_ctx = num_ctx
+        elif settings.AUTO_NUM_CTX:
+            effective_num_ctx = auto_num_ctx(target_model, settings.NUM_CTX)
+        else:
+            effective_num_ctx = settings.NUM_CTX
+
         options = {
             "temperature": settings.TEMPERATURE if temperature is None else temperature,
-            "num_ctx": num_ctx or settings.NUM_CTX,
+            "num_ctx": effective_num_ctx,
         }
         if num_predict is not None:
             options["num_predict"] = num_predict
@@ -177,8 +221,7 @@ class OllamaClient:
         try:
             try:
                 # `think` reached the SDK in 0.4; older builds reject it.
-                response = client.chat(**request, think=think) if think is not None \
-                    else client.chat(**request)
+                response = client.chat(**request, think=effective_think)
             except TypeError:
                 response = client.chat(**request)
         except Exception as exc:  # noqa: BLE001 - surfaced as a typed error

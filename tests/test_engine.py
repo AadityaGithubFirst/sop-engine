@@ -34,6 +34,7 @@ from app.services.markdown_utils import parse_sections, parse_tables
 from app.services.ollama_client import (
     OllamaClient,
     OllamaUnavailableError,
+    auto_num_ctx,
     strip_reasoning,
 )
 from app.services.validators import SOPValidationError
@@ -260,6 +261,51 @@ class TestOllamaClient:
 
     def test_unavailable_error_carries_hint(self) -> None:
         assert "ollama" in OllamaUnavailableError("down").hint.lower()
+
+    def test_auto_num_ctx_scales_with_model_size(self) -> None:
+        # Small models keep the base window; larger ones get progressively more,
+        # but never below the configured floor and never above the cap.
+        assert auto_num_ctx("deepseek-r1:8b", 8192) == 8192
+        assert auto_num_ctx("llama3.2:3b", 8192) == 8192
+        assert auto_num_ctx("deepseek-r1:14b", 8192) == 16384
+        assert auto_num_ctx("qwen3:32b", 8192) == 24576
+        assert auto_num_ctx("llama3.1:70b", 8192) == 32768
+
+    def test_auto_num_ctx_honours_configured_floor(self) -> None:
+        # A generous configured NUM_CTX is never reduced for a small model.
+        assert auto_num_ctx("llama3.2:3b", 12288) == 12288
+
+    def test_auto_num_ctx_unknown_size_keeps_configured(self) -> None:
+        assert auto_num_ctx("some-local-model", 8192) == 8192
+
+    def _capturing_client(self, monkeypatch, model: str):
+        """An OllamaClient whose SDK `.chat` records the request it received."""
+        captured: dict = {}
+
+        class _FakeSDK:
+            def chat(self, **kwargs):
+                captured.update(kwargs)
+                return {"message": {"content": "## ok"}}
+
+        client = OllamaClient(model=model)
+        monkeypatch.setattr(client, "_client", _FakeSDK())
+        return client, captured
+
+    def test_generate_defaults_thinking_off(self, monkeypatch) -> None:
+        client, captured = self._capturing_client(monkeypatch, "deepseek-r1:8b")
+        client.generate("sys", "user")
+        assert captured["think"] is False
+
+    def test_generate_auto_scales_context_for_large_model(self, monkeypatch) -> None:
+        client, captured = self._capturing_client(monkeypatch, "deepseek-r1:14b")
+        client.generate("sys", "user")
+        assert captured["options"]["num_ctx"] == 16384
+
+    def test_generate_explicit_args_override_defaults(self, monkeypatch) -> None:
+        client, captured = self._capturing_client(monkeypatch, "deepseek-r1:14b")
+        client.generate("sys", "user", num_ctx=4096, think=True)
+        assert captured["options"]["num_ctx"] == 4096
+        assert captured["think"] is True
 
 
 # ---------------------------------------------------------------------------

@@ -513,6 +513,13 @@
         elapsedInTask = 0;
         renderTasks();
         el("progressDetail").textContent = TASKS[progressState.index].label + "…";
+      } else if (within >= 1) {
+        // Last task, and the time estimate has been used up but the server has
+        // not answered yet. The bar is capped at 99% on purpose, so replace the
+        // silent wait with an honest "still working" note — a larger model
+        // simply takes longer than the estimate, it is not stuck.
+        el("progressDetail").textContent =
+          "Still working — larger models take longer than expected. Finalising the document…";
       }
     }, 1000);
 

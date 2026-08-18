@@ -170,7 +170,6 @@ class OperationsAgent:
         result = self.client.generate(
             system_prompt=SYSTEM_INSTRUCTION,
             user_prompt=build_repair_prompt(payload, previous, defects, hints),
-            think=False,
         )
         return result if result.strip() else previous
 

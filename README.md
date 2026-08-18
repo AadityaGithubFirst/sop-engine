@@ -301,7 +301,10 @@ Copy `.env.example` to `.env` only if you need to change a default.
 | `OLLAMA_HOST` | `http://127.0.0.1:11434` | Local daemon address. |
 | `MODEL_NAME` | `deepseek-r1:8b` | Model used by all three passes. |
 | `TEMPERATURE` | `0.2` | Low, for reproducible official text. |
-| `NUM_CTX` | `8192` | Context window; raise if sections truncate. |
+| `NUM_CTX` | `8192` | Base context window; raise if sections truncate. |
+| `ENABLE_THINKING` | `false` | Let reasoning models emit their chain of thought. Off keeps the full context budget for the answer, so a bigger model finishes the section instead of truncating. |
+| `AUTO_NUM_CTX` | `true` | Scale the context window to the model's size (8B→8192 … 70B+→32768). Turn off to pin every model to `NUM_CTX`. |
+| `NUM_CTX_CAP` | `32768` | Upper bound for `AUTO_NUM_CTX`, so context growth stays within RAM. |
 | `REQUEST_TIMEOUT` | `600` | Seconds per model call. |
 | `MAX_VALIDATION_RETRIES` | `2` | Re-prompts per pass before deterministic repair. |
 | `STRICT_VALIDATION` | `true` | Reject rather than release a non-compliant document. |
