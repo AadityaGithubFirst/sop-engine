@@ -595,6 +595,46 @@
     });
   }
 
+  // A bare `<a download>` click is a silent no-op in some browser/OS setups —
+  // it neither downloads nor errors, so the user sees "nothing happens". Drive
+  // the save explicitly instead: fetch the file, hand the browser a blob to
+  // store, and fall back to a top-level navigation (the server sends
+  // Content-Disposition: attachment, so it downloads without leaving the page).
+  function downloadDocx(event) {
+    if (event) { event.preventDefault(); }
+    var link = el("downloadBtn");
+    var url = link.getAttribute("href");
+    var filename = link.getAttribute("download") || "sop-document.docx";
+    if (!url || url === "#") { return; }
+
+    var original = link.textContent;
+    var restore = function (text) {
+      link.textContent = text;
+      setTimeout(function () { link.textContent = original; }, 4000);
+    };
+    link.textContent = "Preparing your download…";
+
+    fetch(url).then(function (response) {
+      if (!response.ok) { throw new Error("HTTP " + response.status); }
+      return response.blob();
+    }).then(function (blob) {
+      var objectUrl = URL.createObjectURL(blob);
+      var temp = document.createElement("a");
+      temp.href = objectUrl;
+      temp.download = filename;
+      document.body.appendChild(temp);
+      temp.click();
+      document.body.removeChild(temp);
+      setTimeout(function () { URL.revokeObjectURL(objectUrl); }, 4000);
+      restore("✓ Saved to your Downloads folder");
+    }).catch(function () {
+      // Network path failed (or the blob click was blocked): navigate straight
+      // to the attachment URL as a last resort.
+      link.textContent = original;
+      window.location.href = url;
+    });
+  }
+
   function showResult(result) {
     setPercent(100);
     el("progressPercent").textContent = "100%";
@@ -854,6 +894,8 @@
       ["projectName", "description", "departmentInput"].forEach(function (id) { el(id).value = ""; });
       renderPeople(); renderTools(); goStep(1);
     });
+
+    el("downloadBtn").addEventListener("click", downloadDocx);
 
     el("copyBtn").addEventListener("click", function () {
       var text = el("previewBody").textContent;
