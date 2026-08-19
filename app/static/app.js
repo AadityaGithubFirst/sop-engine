@@ -619,24 +619,15 @@
     };
     link.textContent = "Preparing your download…";
 
-    fetch(url).then(function (response) {
+    // Direct navigation: the server sends Content-Disposition: attachment so
+    // the browser downloads the file without leaving the page. Blob URL tricks
+    // leave a .part temp file in Firefox and are unnecessary here.
+    fetch(url, { method: "HEAD" }).then(function (response) {
       if (!response.ok) { throw new Error("HTTP " + response.status); }
-      return response.blob();
-    }).then(function (blob) {
-      var objectUrl = URL.createObjectURL(blob);
-      var temp = document.createElement("a");
-      temp.href = objectUrl;
-      temp.download = filename;
-      document.body.appendChild(temp);
-      temp.click();
-      document.body.removeChild(temp);
-      setTimeout(function () { URL.revokeObjectURL(objectUrl); }, 4000);
+      window.location.href = url;
       restore("✓ Saved to your Downloads folder");
     }).catch(function () {
-      // Network path failed (or the blob click was blocked): navigate straight
-      // to the attachment URL as a last resort.
       link.textContent = original;
-      window.location.href = url;
     });
   }
 
