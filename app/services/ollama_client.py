@@ -75,6 +75,33 @@ def auto_num_ctx(model: str, configured: int) -> int:
     return max(configured, min(target, settings.NUM_CTX_CAP))
 
 
+def auto_timeout(model: str, configured: int) -> int:
+    """Scale the per-call deadline to the model's parameter count.
+
+    A 32B model on CPU can spend several minutes on a single section; a deadline
+    sized for an 8B model would cut it off and raise a timeout error. Multiplies
+    the configured deadline for larger models, bounded by `REQUEST_TIMEOUT_CAP`.
+    A model whose size cannot be read from its tag keeps the configured value.
+    """
+    import re
+
+    match = re.search(r"(\d+(?:\.\d+)?)\s*b\b", model.lower())
+    if not match:
+        return configured
+
+    billions = float(match.group(1))
+    if billions <= 8:
+        factor = 1.0
+    elif billions <= 15:
+        factor = 2.0
+    elif billions <= 34:
+        factor = 3.0
+    else:
+        factor = 4.0
+
+    return min(int(configured * factor), settings.REQUEST_TIMEOUT_CAP)
+
+
 def _looks_like_timeout(exc: Exception) -> bool:
     """True when an SDK exception represents a deadline overrun."""
     if isinstance(exc, TimeoutError):
@@ -201,13 +228,22 @@ class OllamaClient:
         if num_predict is not None:
             options["num_predict"] = num_predict
 
-        # A short-deadline call needs its own client; the SDK fixes the timeout
+        # An explicit `timeout` wins; otherwise a larger model gets a longer
+        # deadline so it is not cut off mid-section.
+        if timeout is not None:
+            effective_timeout = timeout
+        elif settings.AUTO_TIMEOUT:
+            effective_timeout = auto_timeout(target_model, self.timeout)
+        else:
+            effective_timeout = self.timeout
+
+        # A non-default deadline needs its own client; the SDK fixes the timeout
         # at construction time.
         client = self.client
-        if timeout is not None and timeout != self.timeout:
+        if effective_timeout != self.timeout:
             if OllamaSDKClient is None:  # pragma: no cover - guarded in `client`
                 raise OllamaUnavailableError("The `ollama` package is not importable.")
-            client = OllamaSDKClient(host=self.host, timeout=timeout)
+            client = OllamaSDKClient(host=self.host, timeout=effective_timeout)
 
         request: Dict[str, Any] = {
             "model": target_model,
@@ -231,7 +267,7 @@ class OllamaClient:
             if _looks_like_timeout(exc):
                 raise OllamaTimeoutError(
                     f"'{target_model}' did not answer within "
-                    f"{timeout or self.timeout} seconds.",
+                    f"{effective_timeout} seconds.",
                     hint=(
                         "This model is slow on this computer. Install a lighter one "
                         "with `ollama pull llama3.2:3b` for quick lookups."

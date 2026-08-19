@@ -21,6 +21,7 @@ from app.schemas import (
     AdminDecisionRequest,
     CatalogSubmitRequest,
     HealthResponse,
+    PersonRememberRequest,
     ProjectPayload,
     SOPResponse,
     ToolAcceptRequest,
@@ -140,19 +141,31 @@ def generate_sop(payload: ProjectPayload) -> SOPResponse:
     document_id, markdown, metadata, report = orchestrator.generate(payload)
 
     try:
-        export_markdown_to_docx(markdown=markdown, document_id=document_id, title=None)
+        saved_path = export_markdown_to_docx(
+            markdown=markdown, document_id=document_id, title=None
+        )
     except DocumentExportError as exc:
         logger.exception("Export failed for %s", document_id)
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(exc)
         ) from exc
 
+    # Remember everyone on the project so their name autocompletes next time.
+    for person in payload.stakeholders:
+        try:
+            catalog.remember_person(
+                name=person.name, role=person.role, department=person.department or ""
+            )
+        except Exception:  # noqa: BLE001 - persistence is best-effort, never fatal
+            logger.warning("Could not remember stakeholder '%s'", person.name)
+
     logger.info(
-        "Generated %s (%d chars, %d repair attempts) using %s",
+        "Generated %s (%d chars, %d repair attempts) using %s -> %s",
         document_id,
         len(markdown),
         metadata.repair_attempts,
         metadata.model_name,
+        saved_path,
     )
     return SOPResponse(
         document_id=document_id,
@@ -160,6 +173,7 @@ def generate_sop(payload: ProjectPayload) -> SOPResponse:
         docx_download_url=(
             f"{settings.PUBLIC_BASE_URL.rstrip('/')}/api/v1/sop/download/{document_id}"
         ),
+        docx_path=str(saved_path),
         validation=report,
     )
 
@@ -209,6 +223,15 @@ def catalog_search(kind: str, q: str = "", limit: int = 25) -> dict:
             str(entry.get("name", "")).casefold() == q.casefold() for entry in results
         ) if q else False,
     }
+
+
+@app.post("/api/v1/people/remember", tags=["catalog"])
+def remember_person(request: PersonRememberRequest) -> dict:
+    """Save a person so their name (and role/department) autocompletes later."""
+    record = catalog.remember_person(
+        name=request.name, role=request.role, department=request.department
+    )
+    return {"remembered": True, "person": record}
 
 
 @app.post("/api/v1/catalog/submit", tags=["catalog"])

@@ -6,7 +6,6 @@ machine with no .env file and no network access beyond the loopback interface.
 
 from __future__ import annotations
 
-import tempfile
 from functools import lru_cache
 from pathlib import Path
 
@@ -19,8 +18,16 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 
 
 def _default_output_dir() -> str:
-    """`/tmp/sop_engine` on POSIX, the equivalent temp path on Windows."""
-    return str(Path(tempfile.gettempdir()) / "sop_engine")
+    """A permanent, user-discoverable folder for generated documents.
+
+    Deliberately NOT the system temp directory: Windows and most Linux distros
+    purge temp on reboot or under disk pressure, which silently deletes finished
+    SOPs. Prefer `~/Documents/SOP Builder` when a Documents folder exists, and
+    fall back to `~/SOP Builder` otherwise, so a user can always find the file.
+    """
+    documents = Path.home() / "Documents"
+    base = documents if documents.is_dir() else Path.home()
+    return str(base / "SOP Builder")
 
 
 class Settings(BaseSettings):
@@ -44,7 +51,15 @@ class Settings(BaseSettings):
     # --- Generation controls ------------------------------------------------
     TEMPERATURE: float = 0.2
     NUM_CTX: int = 8192
-    REQUEST_TIMEOUT: int = 600
+    REQUEST_TIMEOUT: int = 900
+
+    # A larger model generates far more slowly on CPU, so a per-call deadline
+    # tuned for an 8B model cuts a 14B/32B pass off mid-answer and surfaces a
+    # timeout error. When on, the deadline scales with the model's size (see
+    # `auto_timeout`), so a bigger model gets the time it needs instead of
+    # erroring out. Turn off to pin every model to REQUEST_TIMEOUT.
+    AUTO_TIMEOUT: bool = True
+    REQUEST_TIMEOUT_CAP: int = 3600
 
     # Reasoning ("thinking") models spend their whole context budget on an
     # internal monologue before writing the answer, which on a fixed NUM_CTX

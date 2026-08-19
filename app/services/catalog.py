@@ -19,6 +19,7 @@ from __future__ import annotations
 
 import json
 import logging
+import re
 import threading
 import uuid
 from datetime import datetime, timezone
@@ -36,7 +37,22 @@ DATA_DIR = Path(__file__).resolve().parent.parent / "data"
 KIND_TOOL = "tool"
 KIND_DEPARTMENT = "department"
 KIND_ROLE = "role"
-VALID_KINDS = (KIND_TOOL, KIND_DEPARTMENT, KIND_ROLE)
+# People the user has entered before. Unlike the other kinds there is no shipped
+# file — every person lives in the writable store — so a name typed once can be
+# offered back as an autocomplete suggestion instead of retyped.
+KIND_PERSON = "person"
+VALID_KINDS = (KIND_TOOL, KIND_DEPARTMENT, KIND_ROLE, KIND_PERSON)
+
+# Fields beyond name/category/description/aliases that a stored entry may carry
+# and that must survive the merge in `entries()` (people keep role + department).
+_EXTRA_FIELDS = ("role", "department")
+
+_WORD_RE = re.compile(r"[a-z0-9]+")
+
+
+def _words(text: str) -> List[str]:
+    """Lower-case word tokens of `text` (letters and digits only)."""
+    return _WORD_RE.findall(str(text).casefold())
 
 _lock = threading.Lock()
 
@@ -86,6 +102,9 @@ def _shipped(kind: str) -> List[Dict[str, Any]]:
         return list(_read_json(DATA_DIR / "departments.json").get("departments", []))
     if kind == KIND_ROLE:
         return list(_read_json(DATA_DIR / "roles.json").get("roles", []))
+    if kind == KIND_PERSON:
+        # People are never shipped; they accrue in the writable store.
+        return []
     raise ValueError(f"Unknown catalog kind: {kind}")
 
 
@@ -126,15 +145,17 @@ def entries(kind: str) -> List[Dict[str, Any]]:
         if name.casefold() in seen:
             continue
         seen.add(name.casefold())
-        combined.append(
-            {
-                "name": name,
-                "category": item.get("category", "Locally Approved"),
-                "aliases": item.get("aliases", []),
-                "description": item.get("description", ""),
-                "locally_approved": True,
-            }
-        )
+        merged = {
+            "name": name,
+            "category": item.get("category", "Locally Approved"),
+            "aliases": item.get("aliases", []),
+            "description": item.get("description", ""),
+            "locally_approved": True,
+        }
+        for extra in _EXTRA_FIELDS:
+            if item.get(extra):
+                merged[extra] = item[extra]
+        combined.append(merged)
 
     _cache[kind] = (stamp, combined)
     return combined
@@ -152,8 +173,15 @@ def categories(kind: str) -> List[str]:
 def _score(query: str, entry: Dict[str, Any]) -> float:
     """Rank an entry against a query.
 
-    Ordering intent: exact name > name prefix > alias hit > substring >
-    fuzzy similarity. Returns 0.0 when the entry should not be shown.
+    Ordering intent: exact name > name prefix > alias hit > every typed word
+    matched as a whole word > partial word match > substring > fuzzy similarity.
+    Returns 0.0 when the entry should not be shown.
+
+    The whole-word tier is what makes a multi-word name findable by *any* of its
+    words, not just the most common one: "Power BI" is reachable from "power",
+    "bi", or "bi power" — the word order and which word is dominant no longer
+    matter. It also stops a short query from being buried by loose substring
+    noise, because a real word match always outranks a mere fragment.
     """
     query = query.casefold().strip()
     if not query:
@@ -168,12 +196,32 @@ def _score(query: str, entry: Dict[str, Any]) -> float:
         return 0.9
     if any(alias.startswith(query) for alias in aliases):
         return 0.85
+
+    # Whole-word matching. Each word the user typed must line up with a whole
+    # word in the name or an alias (equal, or the entry's word begins with the
+    # typed one, so "postgres" still reaches "PostgreSQL"). Every typed word
+    # present scores highest; some present still ranks above a substring hit.
+    query_words = _words(query)
+    entry_words = set(_words(name))
+    for alias in aliases:
+        entry_words.update(_words(alias))
+    if query_words and entry_words:
+        matched = sum(
+            1
+            for qw in query_words
+            if any(ew == qw or ew.startswith(qw) for ew in entry_words)
+        )
+        if matched == len(query_words):
+            return 0.82
+        if matched:
+            return 0.6 + 0.1 * (matched / len(query_words))
+
     if query in name:
-        return 0.75
+        return 0.55
     if any(query in alias for alias in aliases):
-        return 0.7
-    if query in str(entry.get("description", "")).casefold():
         return 0.5
+    if query in str(entry.get("description", "")).casefold():
+        return 0.4
 
     # Typo tolerance: "postgrez" should still find PostgreSQL. This is the only
     # expensive branch, so it is gated: very short queries are too ambiguous to
@@ -271,6 +319,82 @@ def submit(
 
     logger.info("Queued %s '%s' for admin approval (id=%s)", kind, name, record["id"])
     return record
+
+
+def remember(
+    kind: str,
+    name: str,
+    description: str = "",
+    category: str = "",
+    aliases: Optional[List[str]] = None,
+    role: str = "",
+    department: str = "",
+    remembered_by: str = "unattributed",
+) -> Dict[str, Any]:
+    """Persist an entry into the local catalog so it is immediately searchable.
+
+    Unlike `submit()`, this does not wait for administrator approval: it writes
+    straight into the approved store on *this* machine. It is the "don't make me
+    search for or retype this again" path — for the tools a user has accepted and
+    the people they have entered. Re-remembering an existing name updates it in
+    place rather than duplicating.
+    """
+    if kind not in VALID_KINDS:
+        raise ValueError(f"Unknown catalog kind: {kind}")
+    name = name.strip()
+    if not name:
+        raise ValueError("Entry name must not be blank.")
+
+    with _lock:
+        store = _load_store()
+        record: Optional[Dict[str, Any]] = None
+        for existing in store["approved"]:
+            if existing.get("kind") == kind and existing.get("name", "").casefold() == name.casefold():
+                record = existing
+                break
+
+        if record is None:
+            record = {
+                "id": uuid.uuid4().hex[:12],
+                "kind": kind,
+                "name": name,
+                "status": "approved",
+                "source": "local",
+                "remembered_at": datetime.now(timezone.utc).isoformat(),
+            }
+            store["approved"].append(record)
+
+        # Update fields, keeping any earlier non-empty value if the new one is blank.
+        if category:
+            record["category"] = category
+        elif "category" not in record:
+            record["category"] = "Saved on this machine"
+        if description:
+            record["description"] = description
+        if aliases:
+            record["aliases"] = sorted(set(record.get("aliases", [])) | set(aliases))
+        if role:
+            record["role"] = role
+        if department:
+            record["department"] = department
+        record["remembered_by"] = remembered_by
+
+        _save_store(store)
+
+    _cache.pop(kind, None)  # force the next search to see the new entry
+    logger.info("Remembered %s '%s' locally (immediately searchable)", kind, name)
+    return record
+
+
+def remember_person(name: str, role: str = "", department: str = "") -> Dict[str, Any]:
+    """Convenience wrapper: persist a person so their name autocompletes later."""
+    return remember(
+        kind=KIND_PERSON,
+        name=name,
+        role=role,
+        department=department,
+        category=role or "Person",
+    )
 
 
 def list_pending(kind: Optional[str] = None) -> List[Dict[str, Any]]:

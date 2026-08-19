@@ -418,7 +418,18 @@ def accept(
             },
         }
 
-    record = catalog.submit(
+    # Persist locally so the tool is immediately searchable and never has to be
+    # looked up again — no administrator round-trip on a single-machine install.
+    record = catalog.remember(
+        kind=catalog.KIND_TOOL,
+        name=name,
+        description=description,
+        category=category or "Saved on this machine",
+        remembered_by=submitted_by,
+    )
+    # Still queue it for the shared catalog so a multi-user deployment can
+    # promote it for everyone; on a personal machine this is simply a log.
+    catalog.submit(
         kind=catalog.KIND_TOOL,
         name=name,
         description=description,
@@ -428,7 +439,7 @@ def accept(
     )
     return {
         "queued": True,
-        "reason": "awaiting_admin_approval",
+        "reason": "saved_locally",
         "submission_id": record["id"],
         "tool": {"name": name, "description": description, "category": record["category"]},
     }

@@ -264,6 +264,11 @@
     state.people.push({ name: name, role: role, department: department });
     renderPeople();
 
+    // Persist the person so their name (and role/department) autocompletes next
+    // time — they should never have to be retyped from memory.
+    postJSON("/api/v1/people/remember", { name: name, role: role, department: department })
+      .catch(function () { /* saving is a convenience, never block adding */ });
+
     el("personName").value = "";
     el("personRole").value = "";
     el("personDept").value = "";
@@ -645,6 +650,11 @@
     el("resultDocId").textContent = result.document_id;
     el("downloadBtn").href = "/api/v1/sop/download/" + encodeURIComponent(result.document_id);
     el("downloadBtn").setAttribute("download", result.document_id + ".docx");
+
+    // Show where the Word file was saved so the user can open it in Explorer.
+    var pathEl = document.getElementById("savedPath");
+    if (pathEl) { pathEl.textContent = result.docx_path || ""; }
+
     el("previewBody").textContent = result.markdown_content;
 
     var validation = result.validation;
@@ -827,6 +837,21 @@
           postJSON("/api/v1/catalog/submit", {
             kind: "department", name: entry.name, description: "Added by an officer during document creation."
           }).catch(function () {});
+        }
+      }
+    });
+
+    makeCombo({
+      inputId: "personName", menuId: "personNameMenu", kind: "person",
+      addLabel: "Use", allowCustom: false,
+      onPick: function (entry) {
+        el("personName").value = entry.name;
+        // Auto-fill role and department if the saved record has them.
+        if (entry.role && !el("personRole").value.trim()) {
+          el("personRole").value = entry.role;
+        }
+        if (entry.department && !el("personDept").value.trim()) {
+          el("personDept").value = entry.department;
         }
       }
     });

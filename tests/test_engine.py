@@ -279,16 +279,25 @@ class TestOllamaClient:
         assert auto_num_ctx("some-local-model", 8192) == 8192
 
     def _capturing_client(self, monkeypatch, model: str):
-        """An OllamaClient whose SDK `.chat` records the request it received."""
+        """An OllamaClient whose SDK `.chat` records the request it received.
+
+        The auto_timeout and auto_num_ctx helpers may construct a new SDK client
+        for a larger deadline or context window; monkeypatching the class-level
+        constructor ensures the same fake is used regardless.
+        """
         captured: dict = {}
 
         class _FakeSDK:
+            def __init__(self, **kwargs):
+                pass
             def chat(self, **kwargs):
                 captured.update(kwargs)
                 return {"message": {"content": "## ok"}}
 
+        import app.services.ollama_client as _mod
+        monkeypatch.setattr(_mod, "OllamaSDKClient", _FakeSDK)
         client = OllamaClient(model=model)
-        monkeypatch.setattr(client, "_client", _FakeSDK())
+        client._client = _FakeSDK()
         return client, captured
 
     def test_generate_defaults_thinking_off(self, monkeypatch) -> None:
@@ -851,7 +860,7 @@ class TestAPI:
 
     def test_generate_returns_markdown_url_and_validation(self, client: TestClient) -> None:
         body = client.post("/api/v1/sop/generate", json=SAMPLE_PAYLOAD).json()
-        assert set(body) == {"document_id", "markdown_content", "docx_download_url", "validation"}
+        assert set(body) == {"document_id", "markdown_content", "docx_download_url", "docx_path", "validation"}
         assert body["document_id"] in body["docx_download_url"]
         assert body["validation"]["passed"] is True
         assert body["validation"]["phases_found"] == [1, 2, 3, 4]

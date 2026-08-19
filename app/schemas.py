@@ -130,6 +130,9 @@ class SOPResponse(BaseModel):
     document_id: str
     markdown_content: str
     docx_download_url: str
+    docx_path: Optional[str] = Field(
+        None, description="Absolute path of the saved .docx on the server machine."
+    )
     validation: Optional[ValidationReport] = None
 
 
@@ -185,6 +188,14 @@ class ToolAcceptRequest(BaseModel):
     category: str = ""
     source: str = "user"
     submitted_by: str = "unattributed"
+
+
+class PersonRememberRequest(BaseModel):
+    """A person the user entered, saved so their name autocompletes next time."""
+
+    name: str = Field(..., min_length=1)
+    role: str = ""
+    department: str = ""
 
 
 class CatalogSubmitRequest(BaseModel):
